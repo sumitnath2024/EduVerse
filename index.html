@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>EduVerse - Home</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      padding-top: 70px; /* Height of the header */
+    }
+
+    .container-fluid {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 70px; /* Height of the header */
+      left: 0;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0px 0 30px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      margin-right: 20px; /* Space from the right */
+      flex-shrink: 0;
+      z-index: 1000;
+    }
+
+    .iframe-container {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      margin-left: 220px; /* Width of the sidebar */
+    }
+
+    .iframe-container iframe {
+      width: 100%;
+      height: calc(100vh - 140px); /* Adjust based on header and footer height */
+      border: none;
+    }
+
+    .footer {
+      width: 100%;
+      text-align: center;
+      background-color: #f8f9fa; /* Adjust as needed */
+      padding: 10px 0; /* Adjust as needed */
+    }
+
+    .menu-item {
+      display: none;
+    }
+
+    .client .client-menu,
+    .admin .admin-menu {
+      display: block;
+    }
+
+    .welcome-message {
+      display: none;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #444;
+      margin-top: 20px;
+    }
+
+    .logged-in .welcome-message {
+      display: block;
+    }
+
+    .logged-in .authButton {
+      display: none;
+    }
+
+    .logged-in .logoutButton {
+      display: inline;
+    }
+
+    .services-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .services-list a {
+      margin-bottom: 10px;
+      color: #444;
+      text-decoration: none;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+
+    .services-list a:hover {
+      color: #000;
+      text-decoration: none;
+      background-color: #e9ecef;
+    }
+
+    .collapse {
+      display: none;
+    }
+
+    .collapse.show {
+      display: block;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 767px) {
+      .sidebar {
+        display: none;
+      }
+
+      .sidebar.show {
+        display: block;
+        position: absolute;
+        z-index: 1000;
+        background: #fff;
+        width: 80%;
+        overflow-y: auto;
+        box-shadow: 0px 0 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .iframe-container {
+        margin-left: 0;
+      }
+
+      .iframe-container iframe {
+        height: calc(100vh - 140px);
+      }
+
+      .menu-toggle {
+        display: block;
+        cursor: pointer;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .menu-toggle {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="#" class="logo d-flex align-items-center me-auto" onclick="loadContent('home.html')">
+        <img src="assets/img/logo.png" alt="">
+        <h1 class="sitename">EduVerse</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#" class="active" onclick="loadContent('home.html')">Home</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list menu-toggle" onclick="toggleSidebar()"></i>
+      </nav>
+
+      <a class="btn-getstarted authButton" id="authButton" href="#" onclick="handleAuthButtonClick()">Get Started</a>
+      <a class="btn-getstarted logoutButton" id="logoutButton" href="#" onclick="logout()" style="display: none;">Logout</a>
+
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container-fluid">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-box">
+          <div class="welcome-message">
+            Welcome<br><span id="sidebar-username"></span>
+          </div>
+          <div class="services-list">
+            <!-- Admin Menu -->
+            <div id="admin-menu" class="collapse">
+              <a href="javascript:void(0);" onclick="loadContent('manage-boards.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Boards</span></a>
+              <a href="javascript:void(0);" onclick="loadContent('manage-classes.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Classes</span></a>
+              <a href="javascript:void(0);" onclick="loadContent('manage-subjects.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Subjects</span></a>
+              <a href="javascript:void(0);" onclick="loadContent('manage-books.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Books</span></a>
+              <a href="javascript:void(0);" onclick="loadContent('manage-chapters.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Chapters</span></a>
+              <a href="javascript:void(0);" onclick="loadContent('manage-users.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Users</span></a>
+              <a href="javascript:void(0);" onclick="loadContent('payment-gateway-settings.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Payment Gateway Settings</span></a>
+            </div>
+            <!-- Client Menu -->
+            <div id="client-menu" class="collapse">
+              <a href="javascript:void(0);" onclick="loadContent('book-store.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Book Store</span></a>
+              <a href="javascript:void(0);" onclick="loadContent('my-book-shelf.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>My Book Shelf</span></a>
+              <a href="javascript:void(0);" onclick="loadContent('my-profile.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>My Profile</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Sidebar -->
+
+      <div class="iframe-container" data-aos="zoom-out" data-aos-delay="300">
+        <iframe id="content-iframe" src="home.html" class="responsive-iframe" onload="checkIframeContent()"></iframe>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="container">
+      <p>&copy; <strong class="px-1 sitename">EduVerse</strong> All Rights Reserved</p>      
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script>
+    function loadContent(page) {
+      const iframe = document.getElementById('content-iframe');
+      iframe.src = page;
+      checkIframeContent();
+    }
+
+    function handleAuthButtonClick() {
+      loadContent('login.html');
+    }
+
+    function logout() {
+      alert('Logged out successfully');
+      loadContent('home.html');
+      document.body.className = 'index-page';
+      document.getElementById('username').textContent = '';
+      document.getElementById('sidebar-username').textContent = '';
+      document.getElementById('authButton').style.display = 'inline';
+      document.getElementById('logoutButton').style.display = 'none';
+      document.getElementById('sidebar').style.display = 'none';
+      updateMenuVisibility();
+    }
+
+    function checkIframeContent() {
+      const iframe = document.getElementById('content-iframe');
+      const authButton = document.getElementById('authButton');
+      const logoutButton = document.getElementById('logoutButton');
+      const sidebar = document.getElementById('sidebar');
+
+      const pagesWithoutSidebar = ['home.html', 'login.html', 'register.html'];
+      const currentPage = iframe.src.split('/').pop();
+
+      if (pagesWithoutSidebar.includes(currentPage)) {
+        sidebar.style.display = 'none';
+      } else {
+        sidebar.style.display = 'block';
+      }
+
+      if (currentPage === 'home.html' || currentPage === 'login.html' || currentPage === 'register.html') {
+        authButton.style.display = 'inline';
+        logoutButton.style.display = 'none';
+      } else {
+        authButton.style.display = 'none';
+        logoutButton.style.display = 'inline';
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('show');
+    }
+
+    function checkDeviceType() {
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      return isMobile ? 'mobile' : 'desktop';
+    }
+
+    function setInitialPage(userType, deviceType) {
+      let initialPage = '';
+      if (userType === 'client') {
+        initialPage = (deviceType === 'desktop') ? 'book-store.html' : 'book-store.html';
+      } else if (userType === 'admin') {
+        initialPage = (deviceType === 'desktop') ? 'manage-boards.html' : 'manage-boards.html';
+      }
+      loadContent(initialPage);
+    }
+
+    function updateUserInterface(userType, username) {
+      document.body.className = `logged-in ${userType}`;
+      const deviceType = checkDeviceType();
+      setInitialPage(userType, deviceType);
+      document.getElementById('sidebar-username').textContent = username;
+      document.getElementById('authButton').style.display = 'none';
+      document.getElementById('logoutButton').style.display = 'inline';
+      document.getElementById('sidebar').style.display = 'block';
+      updateMenuVisibility();
+    }
+
+    function updateMenuVisibility() {
+      const userType = document.body.className.split(' ')[1];
+      const clientMenu = document.getElementById('client-menu');
+      const adminMenu = document.getElementById('admin-menu');
+
+      if (userType === 'client') {
+        clientMenu.classList.add('show');
+        adminMenu.classList.remove('show');
+      } else if (userType === 'admin') {
+        adminMenu.classList.add('show');
+        clientMenu.classList.remove('show');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadContent('home.html'); // Load the home page initially
+    });
+
+    // This function should be called after login to update the user interface
+    function handleLogin(userType, username) {
+      updateUserInterface(userType, username);
+    }
+
+    window.addEventListener('message', function (event) {
+      const { userType, username, page } = event.data;
+      handleLogin(userType, username);
+      loadContent(page);
+    });
+
+  </script>
+
+</body>
+
+</html>
