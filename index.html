@@ -143,16 +143,6 @@
         display: none;
       }
 
-      .sidebar.show {
-        display: block;
-        position: absolute;
-        z-index: 1000;
-        background: #fff;
-        width: 80%;
-        overflow-y: auto;
-        box-shadow: 0px 0 30px rgba(0, 0, 0, 0.1);
-      }
-
       .iframe-container {
         margin-left: 0;
       }
@@ -168,11 +158,37 @@
         right: 50%;
         transform: translateX(50%);
       }
+
+      .navmenu ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .navmenu ul li {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+
+      .navmenu ul li a {
+        display: block;
+        padding: 10px;
+        width: 100%;
+      }
     }
 
     @media (min-width: 768px) {
       .menu-toggle {
         display: none;
+      }
+
+      .mobile-only {
+        display: none;
+      }
+
+      .desktop-only {
+        display: block;
       }
     }
   </style>
@@ -190,7 +206,17 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#" class="active" onclick="loadContent('home.html')">Home</a></li>
+          <li class="desktop-only"><a href="#" class="active" onclick="loadContent('home.html')">Home</a></li>
+          <li class="mobile-only client-menu"><a href="#" onclick="loadContent('book-store.html')">Book Store</a></li>
+          <li class="mobile-only client-menu"><a href="#" onclick="loadContent('my-book-shelf.html')">My Book Shelf</a></li>
+          <li class="mobile-only client-menu"><a href="#" onclick="loadContent('my-profile.html')">My Profile</a></li>
+          <li class="mobile-only admin-menu"><a href="#" onclick="loadContent('manage-boards.html')">Manage Boards</a></li>
+          <li class="mobile-only admin-menu"><a href="#" onclick="loadContent('manage-classes.html')">Manage Classes</a></li>
+          <li class="mobile-only admin-menu"><a href="#" onclick="loadContent('manage-subjects.html')">Manage Subjects</a></li>
+          <li class="mobile-only admin-menu"><a href="#" onclick="loadContent('manage-books.html')">Manage Books</a></li>
+          <li class="mobile-only admin-menu"><a href="#" onclick="loadContent('manage-chapters.html')">Manage Chapters</a></li>
+          <li class="mobile-only admin-menu"><a href="#" onclick="loadContent('manage-users.html')">Manage Users</a></li>
+          <li class="mobile-only admin-menu"><a href="#" onclick="loadContent('payment-gateway-settings.html')">Payment Gateway Settings</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list menu-toggle" onclick="toggleSidebar()"></i>
       </nav>
@@ -211,7 +237,7 @@
           </div>
           <div class="services-list">
             <!-- Admin Menu -->
-            <div id="admin-menu" class="collapse">
+            <div id="admin-menu-sidebar" class="collapse">
               <a href="javascript:void(0);" onclick="loadContent('manage-boards.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Boards</span></a>
               <a href="javascript:void(0);" onclick="loadContent('manage-classes.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Classes</span></a>
               <a href="javascript:void(0);" onclick="loadContent('manage-subjects.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Manage Subjects</span></a>
@@ -221,7 +247,7 @@
               <a href="javascript:void(0);" onclick="loadContent('payment-gateway-settings.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Payment Gateway Settings</span></a>
             </div>
             <!-- Client Menu -->
-            <div id="client-menu" class="collapse">
+            <div id="client-menu-sidebar" class="collapse">
               <a href="javascript:void(0);" onclick="loadContent('book-store.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>Book Store</span></a>
               <a href="javascript:void(0);" onclick="loadContent('my-book-shelf.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>My Book Shelf</span></a>
               <a href="javascript:void(0);" onclick="loadContent('my-profile.html')" class="d-flex align-items-center"><i class="bi bi-arrow-right-circle me-2"></i><span>My Profile</span></a>
@@ -277,7 +303,6 @@
       document.getElementById('sidebar-username').textContent = '';
       document.getElementById('authButton').style.display = 'inline';
       document.getElementById('logoutButton').style.display = 'none';
-      document.getElementById('sidebar').style.display = 'none';
       updateMenuVisibility();
     }
 
@@ -318,9 +343,9 @@
     function setInitialPage(userType, deviceType) {
       let initialPage = '';
       if (userType === 'client') {
-        initialPage = (deviceType === 'desktop') ? 'book-store.html' : 'book-store.html';
+        initialPage = 'book-store.html';
       } else if (userType === 'admin') {
-        initialPage = (deviceType === 'desktop') ? 'manage-boards.html' : 'manage-boards.html';
+        initialPage = 'manage-boards.html';
       }
       loadContent(initialPage);
     }
@@ -332,23 +357,41 @@
       document.getElementById('sidebar-username').textContent = username;
       document.getElementById('authButton').style.display = 'none';
       document.getElementById('logoutButton').style.display = 'inline';
-      document.getElementById('sidebar').style.display = 'block';
       updateMenuVisibility();
     }
 
     function updateMenuVisibility() {
       const userType = document.body.className.split(' ')[1];
-      const clientMenu = document.getElementById('client-menu');
-      const adminMenu = document.getElementById('admin-menu');
-
+      const clientMenuMobile = document.querySelectorAll('.client-menu.mobile-only');
+      const adminMenuMobile = document.querySelectorAll('.admin-menu.mobile-only');
+      const clientMenuSidebar = document.getElementById('client-menu-sidebar');
+      const adminMenuSidebar = document.getElementById('admin-menu-sidebar');
+      const deviceType = checkDeviceType();
+      
       if (userType === 'client') {
-        clientMenu.classList.add('show');
-        adminMenu.classList.remove('show');
+        clientMenuMobile.forEach(menu => menu.classList.add('show'));
+        adminMenuMobile.forEach(menu => menu.classList.remove('show'));
+        if (deviceType === 'desktop') {
+          clientMenuSidebar.classList.add('show');
+          adminMenuSidebar.classList.remove('show');
+          sidebar.style.display = 'block';
+        } else {
+          sidebar.style.display = 'none';
+        }
       } else if (userType === 'admin') {
-        adminMenu.classList.add('show');
-        clientMenu.classList.remove('show');
+        adminMenuMobile.forEach(menu => menu.classList.add('show'));
+        clientMenuMobile.forEach(menu => menu.classList.remove('show'));
+        if (deviceType === 'desktop') {
+          adminMenuSidebar.classList.add('show');
+          clientMenuSidebar.classList.remove('show');
+          sidebar.style.display = 'block';
+        } else {
+          sidebar.style.display = 'none';
+        }
       }
     }
+
+    window.addEventListener('resize', updateMenuVisibility);
 
     document.addEventListener('DOMContentLoaded', () => {
       loadContent('home.html'); // Load the home page initially
