@@ -50,6 +50,16 @@
       height: 100%;
       border: none;
     }
+
+    .main {
+      min-height: calc(100vh - 70px); /* Adjust the height based on header and footer */
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
   </style>
 
 </head>
@@ -81,8 +91,7 @@
     <div class="iframe-container" data-aos="zoom-out" data-aos-delay="300">
       <iframe id="content-iframe" src="home.html" class="responsive-iframe"></iframe>
     </div>
-    <!-- /iframe Section -->    
-
+    <!-- /iframe Section -->
   </main>
 
   <footer id="footer" class="footer position-relative">
