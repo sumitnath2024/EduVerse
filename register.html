@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Register - EduVerse</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="assets/css/styles.css" rel="stylesheet">  
+</head>
+
+<body class="index-page">
+
+  <main class="main">
+
+    <!-- Register Section -->
+    <section id="register" class="register section">      
+      <div class="container text-center">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <h1 data-aos="fade-up">Register on <span>EduVerse</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Create your account by filling in the details below</p>
+          <div class="d-flex flex-column" data-aos="fade-up" data-aos-delay="200">
+            <form id="registerForm" class="php-email-form">
+              <div class="row gy-4">
+
+                <div class="col-md-12">
+                  <input type="text" name="username" id="username" class="form-control" placeholder="Username" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Email" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <input type="password" class="form-control" name="password" placeholder="Password" required="" id="password">
+                  <div id="password-strength" class="mt-2"></div>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <button type="submit" class="btn btn-custom">Register</button>
+                </div>
+
+              </div>
+            </form>
+            <p class="mt-3">Already have an account? <a href="login.html" class="btn-register">Login here</a></p>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Register Section -->
+
+  </main>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <!-- Firebase Config -->
+  <script src="assets/js/firebase-config.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main-content.js"></script>
+
+  <!-- Custom JS for Password Strength Checker and Registration -->
+  <script src="assets/js/register.js"></script>
+
+</body>
+
+</html>
